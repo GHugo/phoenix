@@ -49,9 +49,9 @@
 #define OFFSET 5
 
 typedef struct {
-  int keys_file_len;
-  int encrypted_file_len;
-  long bytes_comp;
+  off_t keys_file_len;
+  off_t encrypted_file_len;
+  off_t bytes_comp;
   char * keys_file;
   char * encrypt_file;
 } str_data_t;
@@ -74,7 +74,7 @@ typedef struct {
 /** getnextline()
  *  Function to get the next word
  */
-int getnextline(char* output, int max_len, char* file)
+int getnextline(char* output, unsigned long long int max_len, char* file)
 {
     int i=0;
     while(i<max_len-1)
@@ -112,7 +112,7 @@ int mystrcmp(const void *v1, const void *v2)
  */
 void compute_hashes(char* word, char* final_word)
 {
-    int i;
+    size_t i;
 
     for(i=0;i<strlen(word);i++)
         final_word[i] = word[i]+OFFSET;
@@ -143,8 +143,8 @@ int string_match_splitter(void *data_in, int req_units, map_args_t *out)
     }
 
     /* Assign the required number of bytes */
-    int req_bytes = req_units*DEFAULT_UNIT_SIZE;
-    int available_bytes = data->keys_file_len - data->bytes_comp;
+    unsigned long long int req_bytes = req_units*DEFAULT_UNIT_SIZE;
+    long long int available_bytes = data->keys_file_len - data->bytes_comp;
     if(available_bytes < 0)
 	    available_bytes = 0;
 
@@ -152,7 +152,7 @@ int string_match_splitter(void *data_in, int req_units, map_args_t *out)
     out->data = map_data;
 
     char* final_ptr = map_data->keys_file + out->length;
-    int counter = data->bytes_comp + out->length;
+    off_t counter = data->bytes_comp + out->length;
 
     /* make sure we end at a word */
     while(counter <= data->keys_file_len && *final_ptr != '\n'
@@ -190,7 +190,7 @@ void string_match_map(map_args_t *args)
     
     str_map_data_t* data_in = (str_map_data_t*)(args->data);
 
-    int key_len, total_len = 0;
+    long long int key_len, total_len = 0;
     char * key_file = data_in->keys_file;
     char * cur_word = malloc(MAX_REC_LEN);
     char * cur_word_final = malloc(MAX_REC_LEN);
