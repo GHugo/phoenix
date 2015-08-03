@@ -38,6 +38,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <sys/times.h>
+#include <sys/syscall.h>
 #include <inttypes.h>
 
 #include "map_reduce.h"
