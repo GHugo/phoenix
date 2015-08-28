@@ -29,6 +29,8 @@ Full input datasets for 5 of the sample applications. We provide small, medium, 
 - [reverse index](http://csl.stanford.edu/~christos/data/string_match.tar.gz) (~154 MB)
 - [word count](http://csl.stanford.edu/~christos/data/word_count.tar.gz) (~59 MB)
 
+For Phoenix 2, a docker container is available. Please see [this repository](https://github.com/GHugo/docker-phoenix-2.0/).
+
 ___License___
 
 The Phoenix source code is distributed with a BSD license. The copyright is held by Stanford University. Phoenix is provided "as is" without any guarantees of any kind.
